@@ -57,7 +57,7 @@ public class Hibernator {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
 
-        sessionAction.RunInTransaction(session);
+        sessionAction.runInTransaction(session);
 
         transaction.commit();
     }
