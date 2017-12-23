@@ -12,6 +12,7 @@ class HibernatorTest {
     @BeforeAll
     static void SetUp() {
         hibernator = new Hibernator();
+        hibernator.initialize();
     }
 
     private static int createPerson() {

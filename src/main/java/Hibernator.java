@@ -13,6 +13,12 @@ import java.util.List;
 public class Hibernator {
     private SessionFactory sessionFactory = null;
 
+    public void initialize() {
+        Configuration config = new Configuration().configure();
+        config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
+        sessionFactory = config.buildSessionFactory();
+    }
+
     public int create(Person person) {
         runInTransaction(session -> session.save(person));
 
@@ -67,11 +73,5 @@ public class Hibernator {
             initialize();
 
         return sessionFactory.openSession();
-    }
-
-    private void initialize() {
-        Configuration config = new Configuration().configure();
-        config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
-        sessionFactory = config.buildSessionFactory();
     }
 }
