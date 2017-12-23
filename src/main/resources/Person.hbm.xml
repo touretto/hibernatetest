@@ -7,7 +7,7 @@
     <class name="Models.Person" table="Person">
         <!--
             Expected table definition:
-            
+
             CREATE TABLE Person (
                 Id SERIAL PRIMARY KEY,
                 Name VARCHAR(100) NOT NULL
