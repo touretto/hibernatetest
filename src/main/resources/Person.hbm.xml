@@ -5,12 +5,21 @@
 
 <hibernate-mapping>
     <class name="Models.Person" table="Person">
+        <!--
+            Expected table definition:
+            
+            CREATE TABLE Person (
+                Id SERIAL PRIMARY KEY,
+                Name VARCHAR(100) NOT NULL
+            );
+        -->
+
         <meta attribute="class-description">
             This class contains person details.
         </meta>
 
         <id name="Id" type="int" column="Id">
-            <generator class="native"/>
+            <generator class="identity"/>
         </id>
         <property name="Name" type="string" column="Name"/>
     </class>
