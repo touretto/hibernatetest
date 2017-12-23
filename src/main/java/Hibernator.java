@@ -46,6 +46,12 @@ public class Hibernator {
         runInTransaction(session -> session.delete(person));
     }
 
+    public void delete(List<Person> persons) {
+        runInTransaction(session -> {
+            for (Person person: persons)
+                session.delete(person);
+        });
+    }
 
     private void runInTransaction(SessionAction sessionAction) {
         Session session = getSession();

@@ -72,4 +72,15 @@ class HibernatorTest {
         Person retrievedPerson = hibernator.retrieveById(id);
         assertNull(retrievedPerson);
     }
+
+    @Test
+    void deleteAll_deletesListOfPersons() {
+        createPerson();
+        List<Person> allPersons = hibernator.retrieveAll();
+
+        hibernator.delete(allPersons);
+
+        List<Person> remainingPersons = hibernator.retrieveAll();
+        assertTrue(remainingPersons.isEmpty());
+    }
 }
