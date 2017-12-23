@@ -33,6 +33,21 @@ public class Hibernator {
     public List<Person> retrieveAll() {
         Session session = getSession();
 
+        Transaction transaction = null;
+
+        try {
+            return getPersonList(session);
+        } catch (Exception e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    private List<Person> getPersonList(Session session) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
 
@@ -40,7 +55,6 @@ public class Hibernator {
         criteriaQuery.select(root);
 
         Query<Person> query = session.createQuery(criteriaQuery);
-
         return query.getResultList();
     }
 
