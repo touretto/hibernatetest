@@ -23,9 +23,7 @@ public class Hibernator {
     public int create(Person person) {
         Session session = getSession();
 
-        Transaction transaction = session.beginTransaction();
-        session.save(person);
-        transaction.commit();
+        runInTransaction(session, (s) -> s.save(person));
 
         return person.getId();
     }
@@ -38,8 +36,12 @@ public class Hibernator {
     public void update(Person person) {
         Session session = getSession();
 
+        runInTransaction(session, (s) -> s.update(person));
+    }
+
+    private void runInTransaction(Session session, SessionAction sessionAction) {
         Transaction transaction = session.beginTransaction();
-        session.update(person);
+        sessionAction.RunInTransaction(session);
         transaction.commit();
     }
 }
