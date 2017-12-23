@@ -1,8 +1,17 @@
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateTest {
+    private SessionFactory sessionFactory;
+
     public void initHibernate() {
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
+
+    public Person getPersonById(int id) {
+        Session session = sessionFactory.openSession();
+
+        return session.get(Person.class, id);
     }
 }
