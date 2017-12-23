@@ -50,16 +50,20 @@ class HibernatorTest {
     }
 
     @Test
-    void updatePerson_updatesNameInDatabase() {
+    void updatePerson_updatesValuesInDatabase() {
         Person person = retrievePerson();
+
         String newName = person.getName() + "foo";
+        int newAge = person.getAge() + 1;
         person.setName(newName);
+        person.setAge(newAge);
 
         hibernator.update(person);
 
         Person retrievedPerson = hibernator.retrieveById(person.getId());
 
         assertEquals(newName, retrievedPerson.getName());
+        assertEquals(newAge, retrievedPerson.getAge());
     }
 
     @Test

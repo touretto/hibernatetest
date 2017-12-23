@@ -22,5 +22,6 @@
             <generator class="identity"/>
         </id>
         <property name="Name" type="string" column="name"/>
+        <property name="Age" type="int" column="age"/>
     </class>
 </hibernate-mapping>
