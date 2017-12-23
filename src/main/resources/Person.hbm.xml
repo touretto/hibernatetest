@@ -19,9 +19,9 @@
         </meta>
 
         <id name="Id" type="int" column="id">
-            <generator class="identity"/>
+            <generator class="native"/>
         </id>
-        <property name="Name" type="string" column="name"/>
-        <property name="Age" type="int" column="age"/>
+        <property name="Name" type="string" column="name" not-null="true"/>
+        <property name="Age" type="int" column="age" not-null="true"/>
     </class>
 </hibernate-mapping>
