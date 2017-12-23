@@ -51,4 +51,14 @@ class HibernatorTest {
 
         assertEquals(newName, retrievedPerson.getName());
     }
+
+    @Test
+    void deletePerson_deletesPersonFromDatabase() {
+        Person person = retrievePerson();
+
+        hibernator.delete(person);
+
+        Person retrievedPerson = hibernator.retrieveById(person.getId());
+        assertNull(retrievedPerson);
+    }
 }

@@ -35,6 +35,10 @@ public class Hibernator {
         runInTransaction(session -> session.update(person));
     }
 
+    public void delete(Person person) {
+        runInTransaction(session -> session.delete(person));
+    }
+
     private void runInTransaction(SessionAction sessionAction) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
