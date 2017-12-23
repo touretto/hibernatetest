@@ -61,11 +61,20 @@ public class Hibernator {
 
     private void runInTransaction(SessionAction sessionAction) {
         Session session = getSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
 
-        sessionAction.runInTransaction(session);
+        try {
+            transaction = session.beginTransaction();
+            sessionAction.runInTransaction(session);
+            transaction.commit();
 
-        transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null)
+                transaction.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     private Session getSession() {
