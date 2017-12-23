@@ -16,35 +16,38 @@ class HibernatorTest {
         Person newPerson = new Person();
         newPerson.setName("Test");
 
-        return hibernator.createPerson(newPerson);
+        return hibernator.create(newPerson);
+    }
+
+
+    private Person retrievePerson() {
+        int newId = createPerson();
+        return hibernator.retrieveById(newId);
     }
 
     @Test
-    void createPerson_withNewPerson_returnsNewId() {
+    void createPerson_returnsNewId() {
         int newId = createPerson();
 
         assertNotEquals(0, newId);
     }
 
     @Test
-    void retrievePersonById_withIdOfCreatedPerson_returnsPerson() {
-        int newId = createPerson();
+    void retrievePersonById_returnsPerson() {
+        Person person = retrievePerson();
 
-        Person createdPerson = hibernator.retrievePersonById(newId);
-
-        assertNotNull(createdPerson);
+        assertNotNull(person);
     }
 
     @Test
-    void updatePerson_withDifferentName_updatesNameInDatabase() {
-        int newId = createPerson();
-        Person person = hibernator.retrievePersonById(newId);
+    void updatePerson_updatesNameInDatabase() {
+        Person person = retrievePerson();
         String newName = person.getName() + "foo";
         person.setName(newName);
 
         hibernator.update(person);
 
-        Person retrievedPerson = hibernator.retrievePersonById(person.getId());
+        Person retrievedPerson = hibernator.retrieveById(person.getId());
 
         assertEquals(newName, retrievedPerson.getName());
     }

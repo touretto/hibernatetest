@@ -20,13 +20,7 @@ public class Hibernator {
         return sessionFactory.openSession();
     }
 
-    public Person retrievePersonById(int id) {
-        Session session = getSession();
-
-        return session.get(Person.class, id);
-    }
-
-    public int createPerson(Person person) {
+    public int create(Person person) {
         Session session = getSession();
 
         Transaction transaction = session.beginTransaction();
@@ -34,6 +28,11 @@ public class Hibernator {
         transaction.commit();
 
         return person.getId();
+    }
+
+    public Person retrieveById(int id) {
+        Session session = getSession();
+        return session.get(Person.class, id);
     }
 
     public void update(Person person) {
