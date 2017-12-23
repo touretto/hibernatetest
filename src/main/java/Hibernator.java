@@ -7,19 +7,6 @@ import org.hibernate.cfg.Configuration;
 public class Hibernator {
     private SessionFactory sessionFactory = null;
 
-    private void initialize() {
-        Configuration config = new Configuration().configure();
-        config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
-        sessionFactory = config.buildSessionFactory();
-    }
-
-    private Session getSession() {
-        if (sessionFactory == null)
-            initialize();
-
-        return sessionFactory.openSession();
-    }
-
     public int create(Person person) {
         runInTransaction(session -> session.save(person));
 
@@ -39,6 +26,7 @@ public class Hibernator {
         runInTransaction(session -> session.delete(person));
     }
 
+
     private void runInTransaction(SessionAction sessionAction) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
@@ -46,5 +34,18 @@ public class Hibernator {
         sessionAction.RunInTransaction(session);
 
         transaction.commit();
+    }
+
+    private Session getSession() {
+        if (sessionFactory == null)
+            initialize();
+
+        return sessionFactory.openSession();
+    }
+
+    private void initialize() {
+        Configuration config = new Configuration().configure();
+        config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
+        sessionFactory = config.buildSessionFactory();
     }
 }

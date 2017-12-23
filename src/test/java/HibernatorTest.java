@@ -55,10 +55,11 @@ class HibernatorTest {
     @Test
     void deletePerson_deletesPersonFromDatabase() {
         Person person = retrievePerson();
+        int id = person.getId();
 
         hibernator.delete(person);
 
-        Person retrievedPerson = hibernator.retrieveById(person.getId());
+        Person retrievedPerson = hibernator.retrieveById(id);
         assertNull(retrievedPerson);
     }
 }
