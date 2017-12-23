@@ -33,6 +33,19 @@ class HibernatorTest {
         Person createdPerson = hibernator.retrievePersonById(newId);
 
         assertNotNull(createdPerson);
-        assertEquals(newId, createdPerson.getId());
+    }
+
+    @Test
+    void updatePerson_withDifferentName_updatesNameInDatabase() {
+        int newId = createPerson();
+        Person person = hibernator.retrievePersonById(newId);
+        String newName = person.getName() + "foo";
+        person.setName(newName);
+
+        hibernator.update(person);
+
+        Person retrievedPerson = hibernator.retrievePersonById(person.getId());
+
+        assertEquals(newName, retrievedPerson.getName());
     }
 }

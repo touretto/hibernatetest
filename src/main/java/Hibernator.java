@@ -35,4 +35,12 @@ public class Hibernator {
 
         return person.getId();
     }
+
+    public void update(Person person) {
+        Session session = getSession();
+
+        Transaction transaction = session.beginTransaction();
+        session.update(person);
+        transaction.commit();
+    }
 }
