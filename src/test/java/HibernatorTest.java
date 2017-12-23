@@ -1,7 +1,8 @@
+import Models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HibernatorTest {
     private Hibernator hibernator;
@@ -18,8 +19,12 @@ class HibernatorTest {
 
     @Test
     void getPersonById_withId1_returnsObject() {
+        final int id = 1;
+
         hibernator.initHibernate();
-        Person person = hibernator.getPersonById(1);
-        assertNotNull(person);
+        Person person = hibernator.getPersonById(id);
+        assertEquals(id, person.getId());
+
+        System.out.println("Person " + person.getId() + ": " + person.getName());
     }
 }
