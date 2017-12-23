@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="Models.Person" table="Person">
+    <class name="Models.Person" table="person">
         <!--
             Expected table definition:
 
@@ -18,9 +18,9 @@
             This class contains person details.
         </meta>
 
-        <id name="Id" type="int" column="Id">
+        <id name="Id" type="int" column="id">
             <generator class="identity"/>
         </id>
-        <property name="Name" type="string" column="Name"/>
+        <property name="Name" type="string" column="name"/>
     </class>
 </hibernate-mapping>
