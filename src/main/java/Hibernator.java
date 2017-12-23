@@ -20,7 +20,7 @@ public class Hibernator {
         return sessionFactory.openSession();
     }
 
-    public Person getPersonById(int id) {
+    public Person retrievePersonById(int id) {
         Session session = getSession();
 
         return session.get(Person.class, id);

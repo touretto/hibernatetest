@@ -12,35 +12,26 @@ class HibernatorTest {
         hibernator = new Hibernator();
     }
 
-    @Test
-    void getPersonById_withId1_returnsObject() {
-        final int id = 1;
-
-        Person person = hibernator.getPersonById(id);
-        assertEquals(id, person.getId());
-
-        System.out.println("Person " + person.getId() + ": " + person.getName());
-    }
-
-    @Test
-    void createPerson_returnsNewId() {
+    private static int createPerson() {
         Person newPerson = new Person();
         newPerson.setName("Test");
 
-        int newId = hibernator.createPerson(newPerson);
-        assertNotEquals(0, newId);
-        System.out.println("Create person ID: " + newId);
+        return hibernator.createPerson(newPerson);
     }
 
     @Test
-    void getPersonById_withIdFromCreatePerson_returnsCreatedPerson() {
-        Person newPerson = new Person();
-        newPerson.setName("Test");
+    void createPerson_withNewPerson_returnsNewId() {
+        int newId = createPerson();
 
-        int newId = hibernator.createPerson(newPerson);
         assertNotEquals(0, newId);
+    }
 
-        Person createdPerson = hibernator.getPersonById(newId);
+    @Test
+    void retrievePersonById_withIdOfCreatedPerson_returnsPerson() {
+        int newId = createPerson();
+
+        Person createdPerson = hibernator.retrievePersonById(newId);
+
         assertNotNull(createdPerson);
         assertEquals(newId, createdPerson.getId());
     }
