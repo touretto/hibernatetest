@@ -1,10 +1,16 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class HibernateTestTest {
+    private HibernateTest test;
+
+    @BeforeEach
+    void SetUp() {
+        test = new HibernateTest();
+    }
+
     @Test
-    void testConstructor() {
-        HibernateTest test = new HibernateTest();
+    void initHibernate() {
+        test.initHibernate();
     }
 }
