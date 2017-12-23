@@ -2,7 +2,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateTest {
+public class Hibernator {
     private SessionFactory sessionFactory;
 
     public void initHibernate() {
