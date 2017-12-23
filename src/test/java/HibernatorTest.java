@@ -2,6 +2,8 @@ import Models.Person;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HibernatorTest {
@@ -37,6 +39,14 @@ class HibernatorTest {
         Person person = retrievePerson();
 
         assertNotNull(person);
+    }
+
+    @Test
+    void retrieveAllPersons_returnsListOfPersons() {
+        List<Person> persons = hibernator.retrieveAll();
+
+        assertNotNull(persons);
+        System.out.println("Number of results: " + persons.size());
     }
 
     @Test

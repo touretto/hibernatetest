@@ -1,8 +1,15 @@
 import Models.Person;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class Hibernator {
     private SessionFactory sessionFactory = null;
@@ -16,6 +23,20 @@ public class Hibernator {
     public Person retrieveById(int id) {
         Session session = getSession();
         return session.get(Person.class, id);
+    }
+
+    public List<Person> retrieveAll() {
+        Session session = getSession();
+
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+
+        Root<Person> root = criteriaQuery.from(Person.class);
+        criteriaQuery.select(root);
+
+        Query<Person> query = session.createQuery(criteriaQuery);
+
+        return query.getResultList();
     }
 
     public void update(Person person) {
