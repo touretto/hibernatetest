@@ -25,7 +25,7 @@ class HibernatorTest {
 
     private Person retrievePerson() {
         int newId = createPerson();
-        return hibernator.retrieveById(newId);
+        return hibernator.retrieveById(Person.class, newId);
     }
 
     @Test
@@ -61,7 +61,7 @@ class HibernatorTest {
 
         hibernator.update(person);
 
-        Person retrievedPerson = hibernator.retrieveById(person.getId());
+        Person retrievedPerson = hibernator.retrieveById(Person.class, person.getId());
 
         assertEquals(newName, retrievedPerson.getName());
         assertEquals(newAge, retrievedPerson.getAge());
@@ -74,7 +74,7 @@ class HibernatorTest {
 
         hibernator.delete(person);
 
-        Person retrievedPerson = hibernator.retrieveById(id);
+        Person retrievedPerson = hibernator.retrieveById(Person.class, id);
         assertNull(retrievedPerson);
     }
 

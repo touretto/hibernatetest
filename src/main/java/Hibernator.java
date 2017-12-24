@@ -26,10 +26,6 @@ public class Hibernator {
         return object.getId();
     }
 
-    public Person retrieveById(int id) {
-        return retrieveById(Person.class, id);
-    }
-
     public <T> T retrieveById(Class<T> aClass, int id) {
         Session session = getSession();
         return session.get(aClass, id);
