@@ -24,7 +24,6 @@ class HibernatorTest {
         return newPerson.getId();
     }
 
-
     private Person retrievePerson() {
         int newId = createPerson();
         return hibernator.retrieveById(Person.class, newId);
