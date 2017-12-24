@@ -16,32 +16,38 @@ class HibernatorTest {
         hibernator.initialize();
     }
 
-    private static int createPerson() {
+    private static Person createPerson() {
         Person newPerson = new Person();
         newPerson.setName("Test");
 
         hibernator.create(newPerson);
 
-        return newPerson.getId();
+        return newPerson;
     }
 
-    private Person retrievePerson() {
-        int newId = createPerson();
-        return hibernator.retrieveById(Person.class, newId);
+    private static Company createCompany() {
+        Company company = new Company();
+        company.setName("ACME Inc.");
+
+        hibernator.create(company);
+
+        return company;
     }
 
     @Test
     void create_Person_createsNewPerson() {
-        int newId = createPerson();
+        Person person = createPerson();
 
-        assertNotEquals(0, newId);
+        assertNotEquals(0, person.getId());
     }
 
     @Test
     void retrieveById_Person_returnsPerson() {
-        Person person = retrievePerson();
+        Person createdPerson = createPerson();
 
-        assertNotNull(person);
+        Person retrievedPerson = hibernator.retrieveById(Person.class, createdPerson.getId());
+
+        assertNotNull(retrievedPerson);
     }
 
     @Test
@@ -54,7 +60,7 @@ class HibernatorTest {
 
     @Test
     void update_Person_updatesPersonInDatabase() {
-        Person person = retrievePerson();
+        Person person = createPerson();
 
         String newName = person.getName() + "foo";
         int newAge = person.getAge() + 1;
@@ -71,7 +77,7 @@ class HibernatorTest {
 
     @Test
     void delete_Person_deletesPersonFromDatabase() {
-        Person person = retrievePerson();
+        Person person = createPerson();
         int id = person.getId();
 
         hibernator.delete(person);
@@ -94,11 +100,22 @@ class HibernatorTest {
 
     @Test
     void create_Company_createsNewCompany() {
-        Company company = new Company();
-        company.setName("ACME Inc.");
-
-        hibernator.create(company);
+        Company company = createCompany();
 
         assertNotEquals(0, company.getId());
+    }
+
+    @Test
+    void person_setCompany_savesAssociation() {
+        Company company = createCompany();
+        Person person = createPerson();
+
+        person.setCompany(company);
+
+        hibernator.update(person);
+
+        Person retrievedPerson = hibernator.retrieveById(Person.class, person.getId());
+
+        assertEquals(company.getId(), retrievedPerson.getCompany().getId());
     }
 }

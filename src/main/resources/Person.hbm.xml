@@ -14,5 +14,7 @@
         </id>
         <property name="Name" type="string" column="name" not-null="true"/>
         <property name="Age" type="int" column="age" not-null="true"/>
+
+        <many-to-one name="Company" column="company" class="Models.Company" />
     </class>
 </hibernate-mapping>

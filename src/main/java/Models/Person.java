@@ -4,6 +4,7 @@ public class Person {
     private int id;
     private String name;
     private int age;
+    private Company company;
 
     public int getId() {
         return id;
@@ -24,5 +25,12 @@ public class Person {
     }
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

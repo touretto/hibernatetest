@@ -33,4 +33,12 @@ class PersonTest {
         person.setAge(age);
         assertEquals(age, person.getAge());
     }
+
+    @Test
+    void getCompany_afterSetCompany_returnsCompany() {
+        Company company = new Company();
+        person.setCompany(company);
+
+        assertEquals(company, person.getCompany());
+    }
 }
