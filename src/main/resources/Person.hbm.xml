@@ -10,7 +10,7 @@
         </meta>
 
         <id name="Id" type="int" column="id">
-            <generator class="native"/>
+            <generator class="identity"/>
         </id>
         <property name="Name" type="string" column="name" not-null="true"/>
         <property name="Age" type="int" column="age" not-null="true"/>
