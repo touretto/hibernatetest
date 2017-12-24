@@ -1,3 +1,4 @@
+import Models.Company;
 import Models.Person;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -89,5 +90,15 @@ class HibernatorTest {
 
         List<Person> remainingPersons = hibernator.retrieveAll(Person.class);
         assertTrue(remainingPersons.isEmpty());
+    }
+
+    @Test
+    void create_Company_createsNewCompany() {
+        Company company = new Company();
+        company.setName("ACME Inc.");
+
+        hibernator.create(company);
+
+        assertNotEquals(0, company.getId());
     }
 }
