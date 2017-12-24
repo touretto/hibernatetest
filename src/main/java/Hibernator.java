@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class Hibernator {
+class Hibernator {
     private SessionFactory sessionFactory = null;
 
     public void initialize() {
@@ -33,8 +33,6 @@ public class Hibernator {
     public <T> List<T> retrieveAll(Class<T> aClass) {
         try (Session session = getSession()) {
             return getList(aClass, session);
-        } catch (Exception e) {
-            throw e;
         }
     }
 
