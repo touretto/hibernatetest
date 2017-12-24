@@ -1,5 +1,4 @@
 import Models.IdObject;
-import Models.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,10 +28,6 @@ public class Hibernator {
     public <T> T retrieveById(Class<T> aClass, int id) {
         Session session = getSession();
         return session.get(aClass, id);
-    }
-
-    public List<Person> retrieveAll() {
-        return retrieveAll(Person.class);
     }
 
     public <T> List<T> retrieveAll(Class<T> aClass) {

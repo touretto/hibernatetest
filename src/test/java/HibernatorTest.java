@@ -44,7 +44,7 @@ class HibernatorTest {
 
     @Test
     void retrieveAllPersons_returnsListOfPersons() {
-        List<Person> persons = hibernator.retrieveAll();
+        List<Person> persons = hibernator.retrieveAll(Person.class);
 
         assertNotNull(persons);
         System.out.println("Number of results: " + persons.size());
@@ -81,13 +81,13 @@ class HibernatorTest {
     @Test
     void deleteAll_deletesListOfPersons() {
         createPerson();
-        List<Person> allPersons = hibernator.retrieveAll();
+        List<Person> allPersons = hibernator.retrieveAll(Person.class);
 
         List<Object> objects = (List<Object>)(List<?>)allPersons;
 
         hibernator.deleteList(objects);
 
-        List<Person> remainingPersons = hibernator.retrieveAll();
+        List<Person> remainingPersons = hibernator.retrieveAll(Person.class);
         assertTrue(remainingPersons.isEmpty());
     }
 }
