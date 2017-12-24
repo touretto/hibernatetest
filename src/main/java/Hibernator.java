@@ -40,19 +40,10 @@ public class Hibernator {
     }
 
     public <T> List<T> retrieveAll(Class<T> aClass) {
-        Session session = getSession();
-
-        Transaction transaction = null;
-
-        try {
+        try (Session session = getSession()) {
             return getList(aClass, session);
         } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
             throw e;
-        } finally {
-            session.close();
         }
     }
 
@@ -83,10 +74,9 @@ public class Hibernator {
     }
 
     private void runInTransaction(SessionAction sessionAction) {
-        Session session = getSession();
         Transaction transaction = null;
 
-        try {
+        try (Session session = getSession()) {
             transaction = session.beginTransaction();
             sessionAction.runInTransaction(session);
             transaction.commit();
@@ -95,8 +85,6 @@ public class Hibernator {
             if (transaction != null)
                 transaction.rollback();
             throw e;
-        } finally {
-            session.close();
         }
     }
 
