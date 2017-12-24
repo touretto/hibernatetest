@@ -31,21 +31,21 @@ class HibernatorTest {
     }
 
     @Test
-    void createPerson_returnsNewId() {
+    void create_Person_createsNewPerson() {
         int newId = createPerson();
 
         assertNotEquals(0, newId);
     }
 
     @Test
-    void retrievePersonById_returnsPerson() {
+    void retrieveById_Person_returnsPerson() {
         Person person = retrievePerson();
 
         assertNotNull(person);
     }
 
     @Test
-    void retrieveAllPersons_returnsListOfPersons() {
+    void retrieveAll_Person_returnsListOfPersons() {
         List<Person> persons = hibernator.retrieveAll(Person.class);
 
         assertNotNull(persons);
@@ -53,7 +53,7 @@ class HibernatorTest {
     }
 
     @Test
-    void updatePerson_updatesValuesInDatabase() {
+    void update_Person_updatesPersonInDatabase() {
         Person person = retrievePerson();
 
         String newName = person.getName() + "foo";
@@ -70,7 +70,7 @@ class HibernatorTest {
     }
 
     @Test
-    void deletePerson_deletesPersonFromDatabase() {
+    void delete_Person_deletesPersonFromDatabase() {
         Person person = retrievePerson();
         int id = person.getId();
 
@@ -81,13 +81,12 @@ class HibernatorTest {
     }
 
     @Test
-    void deleteAll_deletesListOfPersons() {
+    void delete_listOfPersons_deletesAllPersons() {
         createPerson();
         List<Person> allPersons = hibernator.retrieveAll(Person.class);
+        assertFalse(allPersons.isEmpty());
 
-        List<Object> objects = (List<Object>)(List<?>)allPersons;
-
-        hibernator.deleteList(objects);
+        hibernator.delete(allPersons);
 
         List<Person> remainingPersons = hibernator.retrieveAll(Person.class);
         assertTrue(remainingPersons.isEmpty());

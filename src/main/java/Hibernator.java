@@ -52,7 +52,7 @@ class Hibernator {
         runInTransaction(session -> session.delete(object));
     }
 
-    public void deleteList(List<Object> objects) {
+    public void delete(List<?> objects) {
         runInTransaction(session -> {
             for (Object object: objects)
                 session.delete(object);
