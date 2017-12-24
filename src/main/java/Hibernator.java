@@ -1,4 +1,4 @@
-import Models.ObjectWithId;
+import Models.IdObject;
 import Models.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +20,7 @@ public class Hibernator {
         sessionFactory = config.buildSessionFactory();
     }
 
-    public <T extends ObjectWithId> int create(T object) {
+    public <T extends IdObject> int create(T object) {
         runInTransaction(session -> session.save(object));
 
         return object.getId();

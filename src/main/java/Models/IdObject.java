@@ -1,5 +1,5 @@
 package Models;
 
-public interface ObjectWithId {
+public interface IdObject {
     int getId();
 }
