@@ -19,7 +19,9 @@ class HibernatorTest {
         Person newPerson = new Person();
         newPerson.setName("Test");
 
-        return hibernator.create(newPerson);
+        hibernator.create(newPerson);
+
+        return newPerson.getId();
     }
 
 

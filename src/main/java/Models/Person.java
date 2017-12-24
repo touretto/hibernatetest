@@ -1,6 +1,6 @@
 package Models;
 
-public class Person implements IdObject {
+public class Person {
     private int id;
     private String name;
     private int age;
