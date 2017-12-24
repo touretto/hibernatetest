@@ -1,3 +1,4 @@
+import Models.ObjectWithId;
 import Models.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,24 +20,32 @@ public class Hibernator {
         sessionFactory = config.buildSessionFactory();
     }
 
-    public int create(Person person) {
-        runInTransaction(session -> session.save(person));
+    public <T extends ObjectWithId> int create(T object) {
+        runInTransaction(session -> session.save(object));
 
-        return person.getId();
+        return object.getId();
     }
 
     public Person retrieveById(int id) {
+        return retrieveById(Person.class, id);
+    }
+
+    public <T> T retrieveById(Class<T> aClass, int id) {
         Session session = getSession();
-        return session.get(Person.class, id);
+        return session.get(aClass, id);
     }
 
     public List<Person> retrieveAll() {
+        return retrieveAll(Person.class);
+    }
+
+    public <T> List<T> retrieveAll(Class<T> aClass) {
         Session session = getSession();
 
         Transaction transaction = null;
 
         try {
-            return getPersonList(session);
+            return getList(aClass, session);
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
@@ -47,29 +56,29 @@ public class Hibernator {
         }
     }
 
-    private List<Person> getPersonList(Session session) {
+    private <T> List<T> getList(Class<T> aClass, Session session) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
 
-        Root<Person> root = criteriaQuery.from(Person.class);
+        Root<T> root = criteriaQuery.from(aClass);
         criteriaQuery.select(root);
 
-        Query<Person> query = session.createQuery(criteriaQuery);
+        Query<T> query = session.createQuery(criteriaQuery);
         return query.getResultList();
     }
 
-    public void update(Person person) {
-        runInTransaction(session -> session.update(person));
+    public void update(Object object) {
+        runInTransaction(session -> session.update(object));
     }
 
-    public void delete(Person person) {
-        runInTransaction(session -> session.delete(person));
+    public void delete(Object object) {
+        runInTransaction(session -> session.delete(object));
     }
 
-    public void delete(List<Person> persons) {
+    public void deleteList(List<Object> objects) {
         runInTransaction(session -> {
-            for (Person person: persons)
-                session.delete(person);
+            for (Object object: objects)
+                session.delete(object);
         });
     }
 

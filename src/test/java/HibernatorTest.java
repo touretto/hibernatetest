@@ -83,7 +83,9 @@ class HibernatorTest {
         createPerson();
         List<Person> allPersons = hibernator.retrieveAll();
 
-        hibernator.delete(allPersons);
+        List<Object> objects = (List<Object>)(List<?>)allPersons;
+
+        hibernator.deleteList(objects);
 
         List<Person> remainingPersons = hibernator.retrieveAll();
         assertTrue(remainingPersons.isEmpty());

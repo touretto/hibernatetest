@@ -1,6 +1,6 @@
 package Models;
 
-public class Person {
+public class Person implements ObjectWithId {
     private int id;
     private String name;
     private int age;
