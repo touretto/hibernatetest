@@ -1,3 +1,4 @@
+import Helper.NameGenerator;
 import Models.Company;
 import Models.Person;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,7 +19,9 @@ class HibernatorTest {
 
     private static Person createPerson() {
         Person newPerson = new Person();
-        newPerson.setName("Test");
+
+        String name = NameGenerator.getName("Person");
+        newPerson.setName(name);
 
         hibernator.create(newPerson);
 
@@ -27,7 +30,9 @@ class HibernatorTest {
 
     private static Company createCompany() {
         Company company = new Company();
-        company.setName("ACME Inc.");
+
+        String name = NameGenerator.getName("Company");
+        company.setName(name);
 
         hibernator.create(company);
 
