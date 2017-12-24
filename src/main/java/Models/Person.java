@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Objects;
+
 public class Person {
     private int id;
     private String name;
@@ -32,5 +34,18 @@ public class Person {
     }
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getId() == person.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

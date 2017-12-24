@@ -41,4 +41,38 @@ class PersonTest {
 
         assertEquals(company, person.getCompany());
     }
+
+    @Test
+    void equals_withSameObject_returnsTrue() {
+        Person person = new Person();
+        assertTrue(person.equals(person));
+    }
+
+    @Test
+    void equals_withDifferentObjectType_returnsFalse() {
+        Person person = new Person();
+        assertFalse(person.equals(new Company()));
+    }
+
+    @Test
+    void equals_withEqualId_returnsTrue() {
+        Person person1 = new Person();
+        person1.setId(1);
+
+        Person person2 = new Person();
+        person2.setId(1);
+
+        assertTrue(person1.equals(person2));
+    }
+
+    @Test
+    void equals_withDifferentId_returnsFalse() {
+        Person person1 = new Person();
+        person1.setId(1);
+
+        Person person2 = new Person();
+        person2.setId(2);
+
+        assertFalse(person1.equals(person2));
+    }
 }

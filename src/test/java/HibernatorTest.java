@@ -116,6 +116,6 @@ class HibernatorTest {
 
         Person retrievedPerson = hibernator.retrieveById(Person.class, person.getId());
 
-        assertEquals(company.getId(), retrievedPerson.getCompany().getId());
+        assertEquals(company, retrievedPerson.getCompany());
     }
 }
