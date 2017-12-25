@@ -8,14 +8,36 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Properties;
 
 class Hibernator {
+    private final String credentialsPropertiesFile;
+
     private SessionFactory sessionFactory = null;
+
+    public Hibernator(String credentialsPropertiesFile) {
+        this.credentialsPropertiesFile = credentialsPropertiesFile;
+    }
 
     public void initialize() {
         Configuration config = new Configuration().configure();
+        addCredentialsProperties(config);
         config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
+
         sessionFactory = config.buildSessionFactory();
+    }
+
+    private void addCredentialsProperties(Configuration config) {
+        /* The properties file needs to contain the following data:
+
+            hibernate.connection.username=someusername
+            hibernate.connection.password=theuserspassword
+         */
+        try {
+            Properties credentialsProperties = new PropertiesLoader().loadFromFile(credentialsPropertiesFile);
+            config.addProperties(credentialsProperties);
+        } catch (Exception e) {
+        }
     }
 
     public void create(Object object) {

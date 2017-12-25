@@ -15,8 +15,14 @@ class HibernatorTest {
 
     @BeforeAll
     static void SetUp() {
-        hibernator = new Hibernator();
+        String credentialsPropertiesPath = getCredentialsPropertiesPath();
+        hibernator = new Hibernator(credentialsPropertiesPath);
         hibernator.initialize();
+    }
+
+    static String getCredentialsPropertiesPath() {
+        String homeDirectory = System.getProperty("user.home");
+        return homeDirectory + "/.hibernatetest.db.properties";
     }
 
     private static Person createPerson() {
