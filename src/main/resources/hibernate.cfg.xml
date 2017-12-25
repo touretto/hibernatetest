@@ -19,5 +19,6 @@
 
         <mapping resource="Person.hbm.xml"/>
         <mapping resource="Company.hbm.xml"/>
+        <mapping resource="ContactMethod.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

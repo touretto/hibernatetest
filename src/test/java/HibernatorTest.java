@@ -1,5 +1,7 @@
 import Helper.NameGenerator;
 import Models.Company;
+import Models.ContactMethod;
+import Models.Method;
 import Models.Person;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -108,6 +110,29 @@ class HibernatorTest {
         Company company = createCompany();
 
         assertNotEquals(0, company.getId());
+    }
+
+    @Test
+    void create_ContactMethod_createsNewContactMethod() {
+        ContactMethod method = new ContactMethod();
+        method.setMethod(Method.InstantMessenger);
+        method.setAddress("username");
+
+        hibernator.create(method);
+
+        assertNotEquals(0, method.getId());
+    }
+
+    @Test
+    void create_ContactMethod_savesMethodType() {
+        ContactMethod method = new ContactMethod();
+        method.setMethod(Method.InstantMessenger);
+        method.setAddress("username");
+
+        hibernator.create(method);
+
+        ContactMethod retrievedContactMethod = hibernator.retrieveById(ContactMethod.class, method.getId());
+        assertEquals(method.getMethod(), retrievedContactMethod.getMethod());
     }
 
     @Test

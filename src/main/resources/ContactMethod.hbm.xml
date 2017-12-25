@@ -1,0 +1,22 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Models.ContactMethod" table="contactmethod">
+        <meta attribute="class-description">
+            This class contains contact method details.
+        </meta>
+
+        <id name="Id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="Method" column="method">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">Models.Method</param>
+            </type>
+        </property>
+        <property name="Address" type="string" column="address"/>
+    </class>
+</hibernate-mapping>
