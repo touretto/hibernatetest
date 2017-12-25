@@ -1,43 +1,32 @@
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Properties;
 
 class Hibernator {
-    private final String credentialsPropertiesFile;
-
+    private final SessionFactoryBuilder sessionFactoryBuilder;
     private SessionFactory sessionFactory = null;
 
+    /*
+     * Initialize a new Hibernator instance.
+     * @param credentialsPropertiesFile  Path to file containing username and password for the database connection.
+     *
+     * The file needs to contain the following data:
+     *
+     *    hibernate.connection.username=someusername
+     *    hibernate.connection.password=theuserspassword
+     */
     public Hibernator(String credentialsPropertiesFile) {
-        this.credentialsPropertiesFile = credentialsPropertiesFile;
+        sessionFactoryBuilder = new SessionFactoryBuilder(credentialsPropertiesFile);
     }
 
     public void initialize() {
-        Configuration config = new Configuration().configure();
-        addCredentialsProperties(config);
-        config.setProperty("hibernate.temp.use_jdbc_metadata_defaults","false");
-
-        sessionFactory = config.buildSessionFactory();
-    }
-
-    private void addCredentialsProperties(Configuration config) {
-        /* The properties file needs to contain the following data:
-
-            hibernate.connection.username=someusername
-            hibernate.connection.password=theuserspassword
-         */
-        try {
-            Properties credentialsProperties = new PropertiesLoader().loadFromFile(credentialsPropertiesFile);
-            config.addProperties(credentialsProperties);
-        } catch (Exception e) {
-        }
+        sessionFactory = sessionFactoryBuilder.buildSessionFactory();
     }
 
     public void create(Object object) {
